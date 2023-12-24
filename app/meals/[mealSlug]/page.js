@@ -4,6 +4,20 @@ import { notFound } from 'next/navigation'
 import { getMeal } from '@/lib/meals'
 import styles from './page.module.css'
 
+// para casos donde la metadata tiene que ser dinamica, se puede usar esta funcion
+export async function generateMetadata({ params }) {
+  const meal = getMeal(params.mealSlug)
+
+  if (!meal) {
+    notFound()
+  }
+
+  return {
+    title: meal.title,
+    description: meal.summary
+  }
+}
+
 const MealDetailsPage = ({ params }) => {
   const meal = getMeal(params.mealSlug)
 
